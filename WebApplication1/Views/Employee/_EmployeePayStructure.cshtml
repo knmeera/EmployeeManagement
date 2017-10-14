@@ -1,0 +1,11 @@
+﻿@model IEnumerable<WebApplication1.Models.EmployeePayStructure>
+<h3>Pay Structure</h3>
+ <table>
+    @* @{String[] payStrs = new String[] { "BP:5000", "HRA:650", "DA:100" };}*@
+     @foreach (var pay in Model)
+         {     <tr>
+          <td>@pay.PayComponent</td>
+     </tr>
+     }
+ </table>
+

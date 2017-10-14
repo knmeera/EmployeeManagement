@@ -1,0 +1,23 @@
+﻿
+@{
+    ViewBag.Title = "EmployeeDashboard";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Employee Dashboard</h2>
+
+<div class="row">
+    <div class="col-sm-3">
+      @{Html.RenderAction("_EmployeeStatDashboard");}
+    </div>
+    <div class="col-sm-3">
+        <p>This space for another statics of employee related to Salary and positions</p>        
+    </div>
+    <div class="col-sm-3">
+        <p>Attendance of the Employees</p>
+    </div>
+    <div class="col-sm-3">
+        <p>Employee Performance</p>
+    </div>
+
+</div>

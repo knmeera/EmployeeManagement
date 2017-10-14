@@ -1,0 +1,75 @@
+﻿
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Create Employee</h2>
+@model WebApplication1.Models.Employee
+@*@{
+        var welcomeMessage = "";
+        if (IsPost)
+        {
+            var id = Request["id"];
+            var name = Request["name"];
+            var age = Request["age"];
+            var mobile = Request["mobile"];
+            welcomeMessage = "Welcome  " + name;
+        }
+}*@
+
+@*<form method="post" action="Create">*@
+
+<p>@ViewBag.Message</p>
+@Html.ValidationSummary()
+@using (Html.BeginForm("Create", "Employee", FormMethod.Post))
+{
+
+    <div class="container">
+        <div class="row">
+            <div class="row">
+                <div class="col-sm-3 col-sm-offset-2" style="background-color:silver">
+                    <p>
+                        <label for="ID">
+                            Item ID:
+                        </label><br>
+                        @Html.TextBox("ID", null, new { @class = "form-control"})
+                        @Html.ValidationMessageFor(model => model.ID)
+                    </p>
+                    <p>
+                        <label for="ID" >
+                            Emp.No:
+                        </label><br> 
+                        @Html.TextBox("EmpNo", null, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.EmpNo)
+                         
+                    </p>
+                    <p>
+                        <label for="ID">
+                            First Name:
+                        </label><br>
+                        @Html.TextBox("FirstName", null, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.FirstName)
+
+
+                    </p>
+                     <p>
+                        @Html.DropDownList("DeptID", (IEnumerable<SelectListItem>)ViewBag.Departments, "--Select Department--", new { @class = "Dept" })
+                        @Html.ValidationMessageFor(model => model.DeptID)
+                    </p>
+
+                        <input type="submit" value="Post Send" />
+                </div>
+                <div class="col-sm-4" style="background-color:silver">
+                    <label for="ID">
+                        Position:
+                    </label><br><p>Position Will come here</p>
+                </div>
+        </div>
+    </div>
+   </div>
+}
+
+@*</form>*@
+
+

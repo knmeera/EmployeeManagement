@@ -1,0 +1,41 @@
+﻿@model IEnumerable<WebApplication1.Models.Employee> 
+@{
+     ViewBag.Title = "Index";
+     Layout = "~/Views/Shared/_Layout.cshtml";
+ }
+
+<h2>Employee Master</h2>
+
+
+<style>
+    th {
+        background-color: #eeeeee;
+        color: #628db6;
+    }
+</style>
+@Html.ActionLink("Create New Employee","Create")
+<table class="table table-condensed">
+    <thead class="thead-inverse">
+        <tr>
+            <th>#</th>
+            <th>Emp.No.</th> 
+            <th>First NAme</th>
+            <th>Department</th>
+            <th>Pay Structure</th>
+        </tr>
+    </thead>
+        @foreach (var emp in Model)
+        {
+            <tr>
+
+                <td>@Html.DisplayFor(modelItem => emp.ID)</td>
+                <td>@Html.DisplayFor(modelItem => emp.EmpNo)</td>
+                <td>@Html.DisplayFor(modelItem => emp.FirstName)</td>
+                <td>@Html.DisplayFor(modelItem => emp.DeptID)</td>
+                <td>@{Html.RenderAction("_EmployeePayStructure", new { ID = emp.ID});}</td>
+
+
+            </tr>
+        }
+           
+</table>
