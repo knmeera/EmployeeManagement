@@ -22,6 +22,7 @@
             <th>First NAme</th>
             <th>Department</th>
             <th>Pay Structure</th>
+            <th>Profile Picture</th>
         </tr>
     </thead>
         @foreach (var emp in Model)
@@ -33,7 +34,8 @@
                 <td>@Html.DisplayFor(modelItem => emp.FirstName)</td>
                 <td>@Html.DisplayFor(modelItem => emp.DeptID)</td>
                 <td>@{Html.RenderAction("_EmployeePayStructure", new { ID = emp.ID});}</td>
-
+                <td><img src="@Url.Content(string.Format("~/Content/Employee_Profile_Pics/{0}", emp.PofilePic))" height="150" width="150" /></td>
+                 
 
             </tr>
         }

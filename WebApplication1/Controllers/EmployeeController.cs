@@ -1,21 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using WebApplication1.Models;
-
+using WebApplication1.Data;
 namespace WebApplication1.Controllers
 {
     public class EmployeeController : Controller
     {
-         static List<Employee> empList = new List<Employee>(); // Declaration how much memory allocated in-memeory 
+        EmployeeDBContext _context = new EmployeeDBContext();
+        
+        //static List<Employee> empList = new List<Employee>(); // Declaration how much memory allocated in-memeory 
         static List<EmployeePayStructure> empPayStr = new List<EmployeePayStructure>(); // Declaration how much memory allocated in-memeory 
 
         // GET: Employee
         public ActionResult Index()
         {
- 
+
             //empList.Add(new Employee { ID = 1, EmpNo = "E001", FirstName = "A", LastName = "Gandhi", Gender = "M", Address = "Liitle India" });
             //empList.Add(new Employee { ID = 2, EmpNo = "E002", FirstName = "B", LastName = "Ravi", Gender = "M", Address = "Liitle India" });
             //empList.Add(new Employee { ID = 3, EmpNo = "E003", FirstName = "C", LastName = "Krishna", Gender = "M", Address = "Liitle India" });
@@ -24,19 +27,21 @@ namespace WebApplication1.Controllers
             //empList.Add(new Employee { ID = 6, EmpNo = "E006", FirstName = "E", LastName = "Ramu", Gender = "M", Address = "Liitle India" });
 
 
-            return View(empList);
+            //return View(empList);
+            return View(_context.Employees.ToList());
         }
 
         public ActionResult Create()
         {
 
             Department e = new Department();
-            ViewBag.Departments = new SelectList(e.GetAll(), "ID", "DeptName");
+            //ViewBag.Departments = new SelectList(e.GetAll(), "ID", "DeptName");
+            ViewBag.Departments = new SelectList(_context.Departments.ToList(), "ID", "DeptName");
 
             return View();
         }
         [HttpPost]
-        public ActionResult Create(Employee emp)
+        public ActionResult Create(Employee emp, HttpPostedFileBase file)
         {
 
             //var id = frm["id"];
@@ -55,8 +60,21 @@ namespace WebApplication1.Controllers
 
             if (ValidateForm(emp))
             {
+
+                // Profile Picture Validation
+
+                var fileName = String.Empty;
+                if (file != null && file.ContentLength > 0)
+                {
+                    fileName = Path.GetFileName(file.FileName);
+                    var path = Path.Combine(Server.MapPath("~/Content/Employee_Profile_Pics"), fileName);
+                    file.SaveAs(path);
+                }
+
                 // Do your Save or any business logic
-                empList.Add(emp);
+                emp.PofilePic = fileName;
+                //empList.Add(emp);
+                _context.Employees.Add(emp);
 
                 EmployeePayStructure str = new EmployeePayStructure();
                 str.EmployeeID = emp.ID;
@@ -80,7 +98,7 @@ namespace WebApplication1.Controllers
             else
             {
                 Department e = new Department();
-                ViewBag.Departments = new SelectList(e.GetAll(), "ID", "DeptName");
+                ViewBag.Departments = new SelectList(_context.Departments.ToList(), "ID", "DeptName");
             }
 
 
